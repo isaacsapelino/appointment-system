@@ -5,7 +5,8 @@ const appointmentSchema = sequelize.define('Appointments', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     title: DataTypes.STRING,
     desc: DataTypes.TEXT,

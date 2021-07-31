@@ -7,10 +7,15 @@ const userSchema = sequelize.define('Users', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    email: DataTypes.STRING,
     username: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    token: DataTypes.STRING,
 }, {
     hooks: {
         afterValidate: async (user) => {
@@ -27,7 +32,6 @@ const userSchema = sequelize.define('Users', {
     },
     timestamps: true,
     freezeTableName: true,
-    
 });
 
 module.exports = userSchema;
