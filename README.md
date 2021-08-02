@@ -1,3 +1,2 @@
-# Node JS, Express & React Boilerplate by Isaac
-
-A boilerplate for just an ordinary project.
+# Appointment System
+Appointment System made in JS
