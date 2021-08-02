@@ -1,6 +1,11 @@
 const User = require('../models/users');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config;
+
+const PRIV_KEY = fs.readFileSync((path.resolve('rsa_key_pairs', 'rsa_private_08022021.pem')));
+const PUB_KEY = fs.readFileSync((path.resolve('rsa_key_pairs', 'rsa_public_08022021.pem')));
 
 exports.getUser = async (req, res) => {
     const { id } = req.params;
@@ -33,15 +38,16 @@ exports.createUser = async (req, res) => {
             email: email.toLowerCase(),
             username,
             password
+        }).then(result => {
+            console.log(result.dataValues);
+            const token = jwt.sign(result.dataValues, PRIV_KEY, {
+                expiresIn: "2h",
+                algorithm: 'RS256',
+            });
+            user.token = token;
+            res.status(201).json(user);
         });
 
-        const token = jwt.sign({ user_id: user.id, email }, process.env.TOKEN_KEY, {
-            expiresIn: "2h",
-        });
-        
-        user.token = token;
-
-        res.status(201).json(user);
     } catch (err) {
         console.log(err);
     }
